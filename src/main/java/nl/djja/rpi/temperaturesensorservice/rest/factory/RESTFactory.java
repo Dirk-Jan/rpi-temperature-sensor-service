@@ -2,7 +2,7 @@ package nl.djja.rpi.temperaturesensorservice.rest.factory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.djja.rpi.gpioservice.rest.util.ErrorResponse;
+import nl.djja.rpi.temperaturesensorservice.rest.util.ErrorResponse;
 
 import javax.ws.rs.core.Response;
 

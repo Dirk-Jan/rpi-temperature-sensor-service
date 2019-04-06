@@ -1,8 +1,8 @@
 package nl.djja.rpi.temperaturesensorservice.rest.util;
 
-import nl.djja.rpi.gpioservice.rest.util.exceptions.StringIsNotANumberException;
+import nl.djja.rpi.temperaturesensorservice.rest.util.exceptions.StringIsNotANumberException;
 
-public class Util {
+public class Util { // TODO Never used
     public static Long stringToLong(String value) throws StringIsNotANumberException {
         Long result;
         try {

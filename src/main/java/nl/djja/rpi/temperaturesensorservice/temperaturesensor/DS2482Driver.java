@@ -18,11 +18,21 @@ public class DS2482Driver implements Runnable{ // TODO Should probably make this
         return readings.get(serial);
     }
 
-    private static void registerConnectedTemperatureSensors() {
-
+    public DS2482Driver() {
+        registerConnectedTemperatureSensors();
     }
 
-    private static String[] getTemperatureSensorDirectories(String path) {
+    private void registerConnectedTemperatureSensors() {
+        String[] temperatureSensorDirectories = getTemperatureSensorDirectories("/mnt/1wire/");
+        for (String path : temperatureSensorDirectories) {
+            int startIndex = path.toLowerCase().indexOf("28.ff") + "28.ff".length();
+            int endIndex = path.indexOf('/', startIndex);
+            String serial = path.substring(startIndex, endIndex);
+            addSerialNumber(serial);
+        }
+    }
+
+    private String[] getTemperatureSensorDirectories(String path) {
         return new File(path).list(new FilenameFilter() {
             @Override
             public boolean accept(File directory, String name) {

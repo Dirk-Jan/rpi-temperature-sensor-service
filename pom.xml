@@ -60,7 +60,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>nl.djja.rpi.gpioservice.ServiceInitializer</mainClass>
+                            <mainClass>nl.djja.rpi.temperaturesensorservice.ServiceInitializer</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

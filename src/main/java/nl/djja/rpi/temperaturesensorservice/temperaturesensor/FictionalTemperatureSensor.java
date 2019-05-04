@@ -1,25 +1,25 @@
 package nl.djja.rpi.temperaturesensorservice.temperaturesensor;
 
-public class FictionalTemperatureSensor implements TemperatureSensor{
-    private float temperature;
+import java.util.HashMap;
+
+public class FictionalTemperatureSensor implements TemperatureSensor {
+    private static HashMap<String, Float> temperatureValues = new HashMap<String, Float>();
     private String serial;
 
     public void setTemperature(float temperature) {
-        this.temperature = temperature;
+        temperatureValues.put(serial, temperature);
     }
     public float readTemperature() {
-        return temperature;
+        return temperatureValues.get(serial);
     }
 
     public String getSerial() { return serial; }
-    public void setSerial(String serial) { this.serial = serial; }
-
-    public FictionalTemperatureSensor(float temperature) {
-        this.temperature = temperature;
-    }
 
     public FictionalTemperatureSensor(String serial) {
-        this.temperature = 2;
         this.serial = serial;
+        Float temperature = temperatureValues.get(serial);
+        if (temperature == null) {
+            temperatureValues.put(serial, 2f);
+        }
     }
 }

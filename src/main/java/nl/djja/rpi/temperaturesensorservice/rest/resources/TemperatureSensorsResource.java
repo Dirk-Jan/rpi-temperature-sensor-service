@@ -1,10 +1,12 @@
 package nl.djja.rpi.temperaturesensorservice.rest.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.djja.rpi.temperaturesensorservice.dto.TemperatureSensorDTO;
 import nl.djja.rpi.temperaturesensorservice.exceptions.ItemNotFoundException;
 import nl.djja.rpi.temperaturesensorservice.exceptions.TemperatureReadingException;
 import nl.djja.rpi.temperaturesensorservice.factories.ServiceFactory;
 import nl.djja.rpi.temperaturesensorservice.rest.factory.RESTFactory;
+import nl.djja.rpi.temperaturesensorservice.temperaturesensor.TemperatureSensor;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -34,10 +36,18 @@ public class TemperatureSensorsResource {
     }
 
     @POST
-    @Path("{pinNumber}/state")
+    @Path("{serial}")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response setTemperature(@PathParam("pinNumber") String pinNumberAsString, String ioPinStateDTOJSON) {
-        return RESTFactory.getGenericErrorResponse();
+    public Response setTemperature(@PathParam("serial") String serial, String temperatureSensorDTOJSON) {
+        // Convert dto to obj
+        TemperatureSensorDTO dto;
+        try {
+            dto = new ObjectMapper().readValue(temperatureSensorDTOJSON, TemperatureSensorDTO.class);
+        } catch (IOException e) {
+            return RESTFactory.getErrorResponse(500, "Invalid object was supplied");
+        }
+        ServiceFactory.getTemperatureSensorService().setTemperature(serial, dto.temperature);
+        return RESTFactory.get204Response();
     }
 }

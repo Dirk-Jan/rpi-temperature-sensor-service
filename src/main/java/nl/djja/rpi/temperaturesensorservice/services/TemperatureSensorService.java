@@ -5,5 +5,5 @@ import nl.djja.rpi.temperaturesensorservice.exceptions.TemperatureReadingExcepti
 
 public interface TemperatureSensorService {
     float getTemperature(String serial) throws TemperatureReadingException, ItemNotFoundException;
-    void setTemperature(String serial, float value);
+    void setTemperature(String serial, float value) throws Exception;
 }

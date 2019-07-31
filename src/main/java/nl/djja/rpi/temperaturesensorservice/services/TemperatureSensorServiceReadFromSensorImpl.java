@@ -3,11 +3,14 @@ package nl.djja.rpi.temperaturesensorservice.services;
 import nl.djja.rpi.temperaturesensorservice.exceptions.ItemNotFoundException;
 import nl.djja.rpi.temperaturesensorservice.exceptions.TemperatureReadingException;
 import nl.djja.rpi.temperaturesensorservice.factories.TemperatureSensorFactory;
+import nl.djja.rpi.temperaturesensorservice.temperaturesensor.DS2482TemperatureSensor;
 import nl.djja.rpi.temperaturesensorservice.temperaturesensor.FictionalTemperatureSensor;
 import nl.djja.rpi.temperaturesensorservice.temperaturesensor.TemperatureSensor;
 
-public class TemperatureSensorServiceImpl implements TemperatureSensorService {
+import java.util.HashMap;
+import java.util.Map;
 
+public class TemperatureSensorServiceReadFromSensorImpl implements TemperatureSensorService {
 
     @Override
     public float getTemperature(String serial) throws TemperatureReadingException, ItemNotFoundException {
@@ -15,10 +18,14 @@ public class TemperatureSensorServiceImpl implements TemperatureSensorService {
     }
 
     @Override
-    public void setTemperature(String serial, float value) {
+    public void setTemperature(String serial, float value) throws Exception {
         TemperatureSensor temperatureSensor = TemperatureSensorFactory.getTemperatureSensor(serial);
-        FictionalTemperatureSensor fictionalTemperatureSensor = (FictionalTemperatureSensor)temperatureSensor;
-        // TODO Catch error
-        fictionalTemperatureSensor.setTemperature(value);
+
+        if (temperatureSensor instanceof FictionalTemperatureSensor) {
+            ((FictionalTemperatureSensor)temperatureSensor).setTemperature(value);
+        } else {
+            // TODO error
+            throw new Exception("This type of temperature sensor does not allow its temperature to be set.");
+        }
     }
 }

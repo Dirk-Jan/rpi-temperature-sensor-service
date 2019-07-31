@@ -1,5 +1,7 @@
 package nl.djja.rpi.temperaturesensorservice.temperaturesensor;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class FictionalTemperatureSensor implements TemperatureSensor {
@@ -14,6 +16,11 @@ public class FictionalTemperatureSensor implements TemperatureSensor {
     }
 
     public String getSerial() { return serial; }
+
+    @Override
+    public Collection<String> getConnectedTemperatureSensors() {
+        return new ArrayList<>();
+    }
 
     public FictionalTemperatureSensor(String serial) {
         this.serial = serial;

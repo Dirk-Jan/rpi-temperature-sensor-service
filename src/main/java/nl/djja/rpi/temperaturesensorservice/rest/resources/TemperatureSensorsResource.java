@@ -44,10 +44,13 @@ public class TemperatureSensorsResource {
         TemperatureSensorDTO dto;
         try {
             dto = new ObjectMapper().readValue(temperatureSensorDTOJSON, TemperatureSensorDTO.class);
+            ServiceFactory.getTemperatureSensorService().setTemperature(serial, dto.temperature);
         } catch (IOException e) {
             return RESTFactory.getErrorResponse(500, "Invalid object was supplied");
+        } catch (Exception e) {
+            return RESTFactory.getErrorResponse(500, e.getMessage());
         }
-        ServiceFactory.getTemperatureSensorService().setTemperature(serial, dto.temperature);
+
         return RESTFactory.get204Response();
     }
 }

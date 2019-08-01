@@ -5,18 +5,30 @@ import nl.djja.rpi.temperaturesensorservice.rest.RESTEmbeddedJetty;
 import nl.djja.rpi.temperaturesensorservice.services.TemperatureSensorService;
 
 public class ServiceInitializer {
+    private static Thread temperatureReadingThread = null;
+    private static Thread communicationThread = null;
+
     public static void main(String[] args) {
-//        AppConfig.mockTemperatureSensor = true;
+        AppConfig.mockTemperatureSensor = true;
 
         TemperatureSensorService temperatureSensorService = ServiceFactory.getTemperatureSensorService();
         if (temperatureSensorService instanceof Runnable) {
             Runnable runnable = (Runnable) temperatureSensorService;
-            new Thread(runnable).start();
+            temperatureReadingThread =  new Thread(runnable);
+            temperatureReadingThread.start();
         }
 
         RESTEmbeddedJetty restEmbeddedJetty = new RESTEmbeddedJetty();
-        restEmbeddedJetty.run();
+        communicationThread = new Thread(restEmbeddedJetty);
+        communicationThread.start();
 
-        // TODO stop the application
+        try {
+            communicationThread.join();
+            if (temperatureReadingThread != null) {
+                temperatureReadingThread.join();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

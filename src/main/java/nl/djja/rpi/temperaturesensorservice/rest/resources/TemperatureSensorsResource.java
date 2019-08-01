@@ -40,7 +40,7 @@ public class TemperatureSensorsResource {
     @Consumes("application/json")
     @Produces("application/json")
     public Response setTemperature(@PathParam("serial") String serial, String temperatureSensorDTOJSON) {
-        // Convert dto to obj
+
         TemperatureSensorDTO dto;
         try {
             dto = new ObjectMapper().readValue(temperatureSensorDTOJSON, TemperatureSensorDTO.class);

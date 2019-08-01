@@ -1,5 +1,6 @@
 package nl.djja.rpi.temperaturesensorservice.rest;
 
+import nl.djja.rpi.temperaturesensorservice.AppConfig;
 import nl.djja.rpi.temperaturesensorservice.rest.filters.CorsFilter;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -11,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RESTEmbeddedJetty implements Runnable {
-    public static final int SERVER_PORT = 8282;
+    public static final int SERVER_PORT = AppConfig.port;
     public static final String RESOURCE_DIR = "nl.djja.rpi.temperaturesensorservice.rest.resources";
 
     public static Server configuredServer(int port) {

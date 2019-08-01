@@ -4,15 +4,9 @@ import nl.djja.rpi.temperaturesensorservice.AppConfig;
 import nl.djja.rpi.temperaturesensorservice.exceptions.ItemNotFoundException;
 import nl.djja.rpi.temperaturesensorservice.exceptions.TemperatureReadingException;
 import nl.djja.rpi.temperaturesensorservice.factories.TemperatureSensorFactory;
-import nl.djja.rpi.temperaturesensorservice.temperaturesensor.DS2482TemperatureSensor;
-import nl.djja.rpi.temperaturesensorservice.temperaturesensor.FictionalTemperatureSensor;
-import nl.djja.rpi.temperaturesensorservice.temperaturesensor.TemperatureSensor;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TemperatureSensorServiceReadFromMemoryImpl implements TemperatureSensorService, Runnable {
